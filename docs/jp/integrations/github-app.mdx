@@ -1,16 +1,16 @@
 ---
-title: "GitHubアプリ"
+title: GitHub App
 description: Use the /install-github-app command to set up Droid integration with your GitHub repositories
 keywords: ['github', 'github app', 'install', '/install-github-app', 'slash command', 'github actions', 'workflow', 'droid action', '@droid', 'automated review', 'CI/CD', 'pull request']
 ---
 
-## 概要
+## Overview
 
-`/install-github-app` コマンドは、Factory GitHub Appのインストールと GitHub Actions ワークフローの設定を行うためのガイド付きワークフローを提供します。これにより、DroidはissueとPRコメント内の@droidメンションに応答し、オプションで新しいプルリクエストに対して自動コードレビューを提供できるようになります。
+The `/install-github-app` command provides a guided workflow for installing the Factory GitHub App and configuring GitHub Actions workflows. This enables Droid to respond to @droid mentions in issues and PR comments, and optionally provide automated code reviews on new pull requests.
 
-`/install-github-app` を実行すると、droidは前提条件の確認、リポジトリの選択、GitHub Appのインストール、そしてプルリクエストを通じたワークフローファイルの作成をガイドします。
+When you run `/install-github-app`, droid guides you through verifying prerequisites, selecting a repository, installing the GitHub App, and creating workflow files via a pull request.
 
-## クイックスタート
+## Quick start
 
 <Steps>
   <Step title="Start the installation flow">
@@ -48,11 +48,11 @@ keywords: ['github', 'github app', 'install', '/install-github-app', 'slash comm
   </Step>
 </Steps>
 
-## 前提条件
+## Prerequisites
 
-`/install-github-app` を実行する前に、GitHub CLIがインストールされ、認証されていることを確認してください。
+Before running `/install-github-app`, ensure you have the GitHub CLI installed and authenticated.
 
-### GitHub CLIのインストール
+### Install GitHub CLI
 
 <Tabs>
   <Tab title="macOS (Homebrew)">
@@ -85,57 +85,57 @@ keywords: ['github', 'github app', 'install', '/install-github-app', 'slash comm
   </Tab>
 </Tabs>
 
-### GitHubで認証
+### Authenticate with GitHub
 
 ```bash
 gh auth login
 ```
 
-### 必要なスコープの確認
+### Verify required scopes
 
-CLIには `repo`、`read:org`、`workflow` スコープが必要です。不足している場合は、認証を更新してください：
+The CLI needs `repo`, `read:org`, and `workflow` scopes. If missing, refresh your authentication:
 
 ```bash
 gh auth refresh -s repo,read:org,workflow
 ```
 
-## 利用可能なワークフロー
+## Available workflows
 
-### @Droid ワークフロー
+### @Droid workflow
 
-以下の場所で `@droid` をタグ付けした際にDroidが応答できるようにします：
+Enables Droid to respond when you tag `@droid` in:
 
-- issueコメント
-- プルリクエストコメント
-- プルリクエストレビュー
-- issueの説明とタイトル
+- Issue comments
+- Pull request comments
+- Pull request reviews
+- Issue descriptions and titles
 
-**トリガー：**
-- `issue_comment` - コメントに@droidが含まれている場合
-- `pull_request_review_comment` - PRレビューコメントに@droidが含まれている場合
-- `pull_request_review` - PRレビュー本文に@droidが含まれている場合
-- `issues` - issue本文またはタイトルに@droidが含まれている場合
+**Triggers:**
+- `issue_comment` - When a comment contains @droid
+- `pull_request_review_comment` - When a PR review comment contains @droid
+- `pull_request_review` - When a PR review body contains @droid
+- `issues` - When an issue body or title contains @droid
 
-**使用例：**
-- issueで説明された機能の実装をDroidに依頼
-- PRコメントでコード変更を要求
-- レビューでコードの理解についてサポートを得る
+**Use cases:**
+- Ask Droid to implement features described in issues
+- Request code changes in PR comments
+- Get help understanding code in reviews
 
-### Droid Review ワークフロー
+### Droid Review workflow
 
-新しいプルリクエストに対して自動コードレビューを提供します。
+Provides automated code review on new pull requests.
 
-**トリガー：**
-- `pull_request` - PRがオープン、再オープン、またはレビュー準備完了としてマークされた場合
+**Triggers:**
+- `pull_request` - When a PR is opened, reopened, or marked ready for review
 
-**使用例：**
-- すべてのPRに対する自動初回レビュー
-- 人間のレビュー前に一般的な問題をキャッチ
-- チーム全体での一貫したレビューカバレッジ
+**Use cases:**
+- Automatic first-pass review on all PRs
+- Catch common issues before human review
+- Consistent review coverage across the team
 
-## インストール後のセットアップ手順
+## Setup steps after installation
 
-`/install-github-app` ワークフローの完了後、以下を行う必要があります：
+After the `/install-github-app` workflow completes, you need to:
 
 <Steps>
   <Step title="Review the pull request">
@@ -157,26 +157,26 @@ gh auth refresh -s repo,read:org,workflow
   </Step>
 </Steps>
 
-## 権限
+## Permissions
 
-### リポジトリ管理者権限
+### Repository admin permissions
 
-最もスムーズなセットアップのために、リポジトリへの管理者アクセス権を持っている必要があります。管理者権限を持っていない場合、警告が表示されますが、続行は可能です。以下の作業にリポジトリ管理者が必要になる場合があります：
+For the smoothest setup, you should have admin access to the repository. If you don't have admin permissions, you'll see a warning but can still proceed. You may need a repository admin to:
 
-- GitHub Appインストールの承認
-- `FACTORY_API_KEY` シークレットの追加
-- ワークフローPRのマージ
+- Approve the GitHub App installation
+- Add the `FACTORY_API_KEY` secret
+- Merge the workflow PR
 
-### GitHub App権限
+### GitHub App permissions
 
-Factory Droid GitHub Appには以下の権限が必要です：
+The Factory Droid GitHub App requires these permissions:
 
-- **Contents:** 読み取りと書き込み（ワークフローファイルのプッシュとコード変更のため）
-- **Pull requests:** 読み取りと書き込み（PRの作成とレビューの投稿のため）
-- **Issues:** 読み取りと書き込み（issueコメントへの応答のため）
-- **Actions:** 読み取り（ワークフロー実行の監視のため）
+- **Contents:** Read and write (to push workflow files and make code changes)
+- **Pull requests:** Read and write (to create PRs and post reviews)
+- **Issues:** Read and write (to respond to issue comments)
+- **Actions:** Read (to monitor workflow runs)
 
-## ヒントとベストプラクティス
+## Tips and best practices
 
 <AccordionGroup>
   <Accordion title="Which workflows should I enable?">
@@ -207,7 +207,7 @@ Factory Droid GitHub Appには以下の権限が必要です：
   </Accordion>
 </AccordionGroup>
 
-## 使用例
+## Example usage
 
 ```bash
 cd my-project
@@ -216,7 +216,7 @@ droid
 > /install-github-app
 ```
 
-ガイドフローの完了後、Droidはワークフローファイルを含むPRを作成します。生成されたDroid Reviewワークフローは以下のようになります：
+After completing the guided flow, Droid creates a PR with workflow files. Here's what the generated Droid Review workflow looks like:
 
 <Accordion title="Generated Droid Review Workflow">
 ```yaml
@@ -255,12 +255,12 @@ jobs:
 ```
 </Accordion>
 
-インストール後にワークフローをカスタマイズするには、[Automated Code Review guide](/guides/droid-exec/code-review#customizing-the-workflow) を参照してください。
+To customize the workflow after installation, see the [Automated Code Review guide](/guides/droid-exec/code-review#customizing-the-workflow).
 
-## 関連項目
+## See also
 
-- [Automated Code Review](/guides/droid-exec/code-review) - コードレビューワークフローのカスタマイズ
-- [Factory GitHub App](https://github.com/apps/factory-droid) - アプリをインストールする直接リンク
-- [API keys](https://app.factory.ai/settings/api-keys) - Factory APIキーの生成
-- [Code Review](/cli/features/code-review) - `/review` コマンドによるローカルコードレビュー
-- [Droid Exec GitHub Actions](/guides/droid-exec/github-actions) - その他のGitHub Actionsオートメーション例
+- [Automated Code Review](/guides/droid-exec/code-review) - Customizing the code review workflow
+- [Factory GitHub App](https://github.com/apps/factory-droid) - Direct link to install the app
+- [API keys](https://app.factory.ai/settings/api-keys) - Generate your Factory API key
+- [Code Review](/cli/features/code-review) - Local code review with `/review` command
+- [Droid Exec GitHub Actions](/guides/droid-exec/github-actions) - More GitHub Actions automation examples

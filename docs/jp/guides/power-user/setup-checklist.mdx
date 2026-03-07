@@ -1,10 +1,10 @@
 ---
-title: "パワーユーザーセットアップチェックリスト"
+title: Power User Setup Checklist
 description: Complete checklist to configure Droid for maximum effectiveness with IDE integration, memory, skills, and automation.
 keywords: ['power user', 'setup', 'checklist', 'configuration', 'optimization', 'productivity', 'best practices']
 ---
 
-このチェックリストは、基本的なDroidインストールを完全に最適化された開発環境に変換します。各セクションは前のセクションをベースに構築されているため、最良の結果を得るためには順番通りに完了してください。
+This checklist transforms a basic Droid installation into a fully optimized development environment. Each section builds on the previous one—complete them in order for best results.
 
 <Note>
   Each section can be done independently if you prefer to spread it out.
@@ -16,9 +16,9 @@ keywords: ['power user', 'setup', 'checklist', 'configuration', 'optimization', 
 
 ---
 
-## レベル1：基本セットアップ
+## Level 1: Essential Setup
 
-これらの基盤となる項目は、最大の即時効果をもたらします。
+These foundational items give you the biggest immediate impact.
 
 <Steps>
   <Step title="Install the Factory IDE Plugin">
@@ -74,9 +74,9 @@ keywords: ['power user', 'setup', 'checklist', 'configuration', 'optimization', 
 
 ---
 
-## レベル2：メモリ＆コンテキスト
+## Level 2: Memory & Context
 
-永続的なメモリを構築し、Droidがセッション間であなたの設定を記憶できるようにします。
+Build persistent memory so Droid remembers your preferences across sessions.
 
 <Steps>
   <Step title="Create a memories file">
@@ -140,9 +140,9 @@ keywords: ['power user', 'setup', 'checklist', 'configuration', 'optimization', 
 
 ---
 
-## レベル3：ルール＆規約
+## Level 3: Rules & Conventions
 
-コーディング標準を整理し、Droidが一貫してそれらに従うようにします。
+Organize your coding standards so Droid follows them consistently.
 
 <Steps>
   <Step title="Create a rules directory">
@@ -226,9 +226,9 @@ keywords: ['power user', 'setup', 'checklist', 'configuration', 'optimization', 
 
 ---
 
-## レベル4：スキル＆自動化
+## Level 4: Skills & Automation
 
-再利用可能なスキルと自動化フックを追加します。
+Add reusable skills and automation hooks.
 
 <Info>
   **Three ways to automate:** 
@@ -324,9 +324,9 @@ keywords: ['power user', 'setup', 'checklist', 'configuration', 'optimization', 
 
 ---
 
-## レベル5：トークン最適化
+## Level 5: Token Optimization
 
-品質を犠牲にすることなく、コスト効率を微調整します。
+Fine-tune for cost efficiency without sacrificing quality.
 
 <Steps>
   <Step title="Enable Spec Mode for complex work">
@@ -362,35 +362,35 @@ keywords: ['power user', 'setup', 'checklist', 'configuration', 'optimization', 
 
 ---
 
-## クイックリファレンス：ファイルの場所
+## Quick Reference: File Locations
 
-| 目的 | 個人用 | プロジェクト用 |
+| Purpose | Personal | Project |
 |---------|----------|---------|
-| **スキル** | `~/.factory/skills/<name>/SKILL.md` | `.factory/skills/<name>/SKILL.md` |
-| **メモリ** | `~/.factory/memories.md` | `.factory/memories.md` |
-| **ルール** | `~/.factory/rules/*.md` | `.factory/rules/*.md` |
-| **設定** | `~/.factory/settings.json` | `.factory/settings.json` |
-| **フック** | settings.json内 | settings.json内 |
-| **エージェント指示** | `~/.factory/AGENTS.md` | `./AGENTS.md` |
-| **カスタムdroid** | `~/.factory/droids/<name>.md` | `.factory/droids/<name>.md` |
+| **Skills** | `~/.factory/skills/<name>/SKILL.md` | `.factory/skills/<name>/SKILL.md` |
+| **Memory** | `~/.factory/memories.md` | `.factory/memories.md` |
+| **Rules** | `~/.factory/rules/*.md` | `.factory/rules/*.md` |
+| **Settings** | `~/.factory/settings.json` | `.factory/settings.json` |
+| **Hooks** | In settings.json | In settings.json |
+| **Agent instructions** | `~/.factory/AGENTS.md` | `./AGENTS.md` |
+| **Custom droids** | `~/.factory/droids/<name>.md` | `.factory/droids/<name>.md` |
 
 ---
 
-## 検証チェックリスト
+## Verification Checklist
 
-セットアップを検証するために、このチェックリストを実行してください：
+Run through this checklist to verify your setup:
 
-- [ ] Droid実行時にIDEプラグインが「接続済み」を表示する
-- [ ] `AGENTS.md`がbuild/testコマンドと共に存在する
-- [ ] あなたの設定を含むメモリファイルが作成されている
-- [ ] 少なくとも1つのルールファイルがあるルールディレクトリが存在する
-- [ ] 少なくとも1つのカスタムスキルが作成されている
-- [ ] 自動フォーマットフックが設定されている
-- [ ] 準備状況レポートがレベル2以上を表示する
+- [ ] IDE plugin shows "connected" when running Droid
+- [ ] `AGENTS.md` exists with build/test commands
+- [ ] Memories file created with your preferences
+- [ ] Rules directory with at least one rules file
+- [ ] At least one custom skill created
+- [ ] Auto-formatting hook configured
+- [ ] Readiness report shows Level 2 or higher
 
 ---
 
-## 次のステップ
+## Next Steps
 
 <CardGroup cols={2}>
   <Card title="Prompt Crafting" href="/guides/power-user/prompt-crafting" icon="wand-magic-sparkles">
