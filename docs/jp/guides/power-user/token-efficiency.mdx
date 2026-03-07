@@ -1,10 +1,10 @@
 ---
-title: "トークン効率戦略"
+title: Token Efficiency Strategies
 description: Reduce token usage while maintaining quality through project setup, model selection, and workflow optimization.
 keywords: ['tokens', 'efficiency', 'cost', 'optimization', 'usage', 'pricing', 'performance']
 ---
 
-トークンの使用量は単にコストの問題ではありません。フィードバックループの速度とコンテキストウィンドウの制限に関わる問題です。このガイドでは、プロジェクトの最適化、スマートなモデル選択、ワークフローパターンを通じて、より少ないトークンでより多くのことを実現する方法を紹介します。
+Token usage isn't just about cost—it's about feedback loop speed and context window limits. This guide shows you how to get more done with fewer tokens through project optimization, smart model selection, and workflow patterns.
 
 <Info>
   **Using Factory App?** These strategies apply to both CLI and [Factory App](/web/getting-started/overview). You can view your project's readiness score in the [Agent Readiness Dashboard](/web/agent-readiness/dashboard).
@@ -12,9 +12,9 @@ keywords: ['tokens', 'efficiency', 'cost', 'optimization', 'usage', 'pricing', '
 
 ---
 
-## トークン使用量の理解
+## Understanding Token Usage
 
-トークンは主に3つの領域で消費されます：
+Tokens are consumed in three main areas:
 
 ```
 ┌──────────────────────────────────────────────────────────┐
@@ -30,31 +30,31 @@ keywords: ['tokens', 'efficiency', 'cost', 'optimization', 'usage', 'pricing', '
 └────────────────┴────────────────┴────────────────────────┘
 ```
 
-**高いトークン使用量の典型的な原因：**
-- 過度な探索（不明確な指示）
-- 複数回の試行（コンテキストの不足や失敗するテスト）
-- 冗長な出力（フォーマット制約なし）
+**High token usage often means:**
+- Too much exploration (unclear instructions)
+- Multiple attempts (missing context or failing tests)
+- Verbose output (no format constraints)
 
 ---
 
-## 効率的なプロジェクトセットアップ
+## Project Setup for Efficiency
 
-最大のトークン節約は、無駄なサイクルを防ぐプロジェクト設定から生まれます。
+The biggest token savings come from project configuration that prevents wasted cycles.
 
-### 1. 高速で信頼性の高いテスト
+### 1. Fast, Reliable Tests
 
 <Warning>
   Slow or flaky tests are the #1 cause of wasted tokens. Each retry costs a full response cycle.
 </Warning>
 
-| テストの特徴 | トークンへの影響 |
+| Test Characteristic | Impact on Tokens |
 |---------------------|------------------|
-| 高速テスト（30秒未満） | Droidが変更を即座に検証 |
-| 低速テスト（2分超） | Droidが検証をスキップするか、待機中にコンテキストを無駄にする可能性 |
-| 不安定なテスト | 誤った失敗がデバッグサイクルを引き起こす |
-| テストなし | Droidが変更を検証できず、やりとりが増加 |
+| Fast tests (< 30s) | Droid verifies changes immediately |
+| Slow tests (> 2min) | Droid may skip verification or waste context waiting |
+| Flaky tests | False failures cause debugging cycles |
+| No tests | Droid can't verify changes, more back-and-forth |
 
-**アクション項目：**
+**Action items:**
 ```markdown
 ## In your AGENTS.md
 
@@ -64,9 +64,9 @@ keywords: ['tokens', 'efficiency', 'cost', 'optimization', 'usage', 'pricing', '
 - Full suite takes ~3 minutes, use `--bail` for early exit on failure
 ```
 
-### 2. リンティングと型チェック
+### 2. Linting and Type Checking
 
-Droidがエラーを即座にキャッチできれば、報告を待つ代わりに同じターンで修正できます。
+When Droid can catch errors immediately, it fixes them in the same turn instead of waiting for you to report them.
 
 ```markdown
 ## In your AGENTS.md
@@ -79,9 +79,9 @@ Droidがエラーを即座にキャッチできれば、報告を待つ代わり
 Always run `npm run lint:fix` after making changes.
 ```
 
-### 3. 明確なプロジェクト構造
+### 3. Clear Project Structure
 
-ファイル構成を文書化して、Droidが探索でトークンを無駄にしないようにします：
+Document your file organization so Droid doesn't waste tokens exploring:
 
 ```markdown
 ## In your AGENTS.md
@@ -101,23 +101,23 @@ When adding a new component:
 
 ---
 
-## エージェント対応チェックリスト
+## Agent Readiness Checklist
 
-[Agent Readiness Report](/cli/features/readiness-report)は、トークン効率に直接影響する基準に対してプロジェクトを評価します。
+The [Agent Readiness Report](/cli/features/readiness-report) evaluates your project against criteria that directly impact token efficiency.
 
-### 高影響度の基準
+### High-Impact Criteria
 
-| 基準 | トークン影響度 | 重要な理由 |
+| Criterion | Token Impact | Why It Matters |
 |-----------|--------------|----------------|
-| **Linter設定** | 🟢 高 | エラーを即座にキャッチ、デバッグサイクルなし |
-| **型チェッカー** | 🟢 高 | ランタイムエラーを防ぎ、コードをより明確に |
-| **実行可能な単体テスト** | 🟢 高 | 同じターンで検証 |
-| **AGENTS.md** | 🟢 高 | 事前にコンテキスト提供、探索減少 |
-| **ビルドコマンド文書化** | 🟡 中 | 推測不要、失敗する試行の削減 |
-| **依存関係の固定** | 🟡 中 | 再現可能なビルド |
-| **Pre-commitフック** | 🟡 中 | 自動品質保証 |
+| **Linter Configuration** | 🟢 High | Catches errors immediately, no debugging cycles |
+| **Type Checker** | 🟢 High | Prevents runtime errors, clearer code |
+| **Unit Tests Runnable** | 🟢 High | Verification in same turn |
+| **AGENTS.md** | 🟢 High | Context upfront, less exploration |
+| **Build Command Documentation** | 🟡 Medium | No guessing, fewer failed attempts |
+| **Dependencies Pinned** | 🟡 Medium | Reproducible builds |
+| **Pre-commit Hooks** | 🟡 Medium | Automatic quality enforcement |
 
-準備状況レポートを実行してギャップを特定します：
+Run the readiness report to identify gaps:
 
 ```bash
 droid
@@ -126,30 +126,30 @@ droid
 
 ---
 
-## モデル選択戦略
+## Model Selection Strategy
 
-異なるモデルには異なるコスト倍率と機能があります。タスクにモデルを合わせます：
+Different models have different cost multipliers and capabilities. Match the model to the task:
 
-### コスト倍率
+### Cost Multipliers
 
-| モデル | 倍率 | 最適用途 |
+| Model | Multiplier | Best For |
 |-------|------------|----------|
-| Droid Core (MiniMax M2.5) | 0.12× | 推論サポート付きの最安価オプション |
-| Gemini 3 Flash | 0.2× | 大量タスク向けの高速・安価 |
-| Droid Core (GLM-4.7) | 0.25× | バルク自動化、単純タスク |
-| Droid Core (Kimi K2.5) | 0.25× | コスト重視の作業、画像サポート |
-| Claude Haiku 4.5 | 0.4× | 素早い編集、ルーチンワーク |
-| Droid Core (GLM-5) | 0.4× | Droid Coreでより高い品質が欲しい場合の新しいオープンソースGLMモデル |
-| GPT-5.1 / GPT-5.1-Codex | 0.5× | 実装、デバッグ |
-| GPT-5.2-Codex / GPT-5.3-Codex | 0.7× | Extra High推論による高度なコーディング |
-| Gemini 3 Pro | 0.8× | 研究、分析 |
-| Gemini 3.1 Pro | 0.8× | より新しいGemini世代による研究、分析 |
-| Claude Sonnet 4.5 | 1.2× | 品質/コストのバランス |
-| Claude Opus 4.5 | 2× | 複雑な推論、アーキテクチャ |
-| Claude Opus 4.6 | 2× | 最新フラッグシップ、Max推論 |
-| Claude Opus 4.6 Fast | 12× | より高速な応答に調整されたOpus 4.6 |
+| Droid Core (MiniMax M2.5) | 0.12× | Cheapest option with reasoning support |
+| Gemini 3 Flash | 0.2× | Fast, cheap for high-volume tasks |
+| Droid Core (GLM-4.7) | 0.25× | Bulk automation, simple tasks |
+| Droid Core (Kimi K2.5) | 0.25× | Cost-sensitive work, supports images |
+| Claude Haiku 4.5 | 0.4× | Quick edits, routine work |
+| Droid Core (GLM-5) | 0.4× | Newer open-source GLM model when you want stronger quality in Droid Core |
+| GPT-5.1 / GPT-5.1-Codex | 0.5× | Implementation, debugging |
+| GPT-5.2-Codex / GPT-5.3-Codex | 0.7× | Advanced coding with Extra High reasoning |
+| Gemini 3 Pro | 0.8× | Research, analysis |
+| Gemini 3.1 Pro | 0.8× | Research, analysis with newer Gemini generation |
+| Claude Sonnet 4.5 | 1.2× | Balanced quality/cost |
+| Claude Opus 4.5 | 2× | Complex reasoning, architecture |
+| Claude Opus 4.6 | 2× | Latest flagship, Max reasoning |
+| Claude Opus 4.6 Fast | 12× | Opus 4.6 tuned for faster responses |
 
-### タスクベースのモデル選択
+### Task-Based Model Selection
 
 ```
 Simple edit, formatting      → Haiku 4.5 (0.4×)
@@ -159,18 +159,18 @@ Architecture planning        → Opus 4.6 (2×) or Opus 4.5 (2×)
 Bulk file processing         → Droid Core (GLM-4.7 at 0.25× or GLM-5 at 0.4×)
 ```
 
-### 推論エフォートの影響
+### Reasoning Effort Impact
 
-高い推論 = より多くの「思考」トークンですが、多くの場合再試行が少なくなります。
+Higher reasoning = more "thinking" tokens but often fewer retries.
 
-| 推論 | 使用時期 | トークンのトレードオフ |
+| Reasoning | When to Use | Token Trade-off |
 |-----------|-------------|-----------------|
-| オフ/なし | 単純で明確なタスク | ターン当たり最低、より多くのターンが必要な可能性 |
-| 低 | 標準実装 | 良いバランス |
-| 中 | 複雑なロジック、デバッグ | ターン当たり高、再試行少 |
-| 高 | アーキテクチャ、分析 | ターン当たり最高、初回試行の成功率最高 |
+| Off/None | Simple, clear tasks | Lowest per-turn, may need more turns |
+| Low | Standard implementation | Good balance |
+| Medium | Complex logic, debugging | Higher per-turn, fewer retries |
+| High | Architecture, analysis | Highest per-turn, best first-attempt |
 
-**経験則：** 最初の試行を間違えると修正が高くつくタスクには、高い推論を使用します。
+**Rule of thumb:** Use higher reasoning for tasks where a wrong first attempt would be expensive to fix.
 
 <Tip>
   **Configure mixed models** to automatically use different models for planning vs implementation. See [Mixed Models](/cli/configuration/mixed-models) for setup.
@@ -178,13 +178,13 @@ Bulk file processing         → Droid Core (GLM-4.7 at 0.25× or GLM-5 at 0.4×
 
 ---
 
-## 効率的なワークフローパターン
+## Workflow Patterns for Efficiency
 
-### パターン1：複雑な作業でのSpecモード
+### Pattern 1: Spec Mode for Complex Work
 
-実装前の計画に[Specification Mode](/cli/user-guides/specification-mode)（`Shift+Tab`または`/spec`）を使用します。
+Use [Specification Mode](/cli/user-guides/specification-mode) (`Shift+Tab` or `/spec`) to plan before implementing.
 
-**Specモードなし：**
+**Without Spec Mode:**
 ```
 Turn 1: Start implementing → wrong approach → wasted tokens
 Turn 2: Undo and try different approach → more tokens
@@ -192,7 +192,7 @@ Turn 3: Finally get it right
 Total: 3 turns of implementation tokens
 ```
 
-**Specモードあり：**
+**With Spec Mode:**
 ```
 Turn 1: Plan with exploration → correct approach identified
 Turn 2: Implement correctly
@@ -207,39 +207,39 @@ Total: 1 turn of planning + 1 turn of implementation
   - Is security-sensitive
 </Tip>
 
-### パターン2：コンテキスト用IDEプラグイン
+### Pattern 2: IDE Plugin for Context
 
-IDEプラグインなしでは、Droidはコンテキストを理解するためにファイルを読む必要があります：
+Without IDE plugin, Droid must read files to understand context:
 
 ```
 Read file A → Read file B → Read file C → Understand context → Work
 (4 tool calls before actual work)
 ```
 
-IDEプラグインありでは、コンテキストが即座に利用可能：
+With IDE plugin, context is immediate:
 
 ```
 Work (IDE provides open files, errors, selection)
 (0 extra tool calls for context)
 ```
 
-### パターン3：一般的より具体的に
+### Pattern 3: Specific Over General
 
-**高コストなプロンプト：**
+**Expensive prompt:**
 ```
 "Fix the bug in the auth module"
 ```
-→ Droidはバグを見つけるために複数のファイルを読み、異なる可能性を探索
+→ Droid reads multiple files to find the bug, explores different possibilities
 
-**効率的なプロンプト：**
+**Efficient prompt:**
 ```
 "Fix the timeout bug in src/auth/session.ts line 45 where the session expires after 5 minutes instead of 24 hours"
 ```
-→ Droidは直接問題に向かう
+→ Droid goes directly to the issue
 
-### パターン4：類似の作業をバッチ処理
+### Pattern 4: Batch Similar Work
 
-**高コスト：**
+**Expensive:**
 ```
 Turn 1: "Add logging to userService"
 Turn 2: "Add logging to orderService"
@@ -247,7 +247,7 @@ Turn 3: "Add logging to paymentService"
 (3 turns, context rebuilt each time)
 ```
 
-**効率的：**
+**Efficient:**
 ```
 Turn 1: "Add structured logging to all services in src/services/. Use the pattern from src/lib/logger.ts. Services: user, order, payment."
 (1 turn, pattern established once)
@@ -255,21 +255,21 @@ Turn 1: "Add structured logging to all services in src/services/. Use the patter
 
 ---
 
-## トークンの無駄の削減
+## Reducing Token Waste
 
-### 一般的な無駄パターン
+### Common Waste Patterns
 
-| パターン | 原因 | 修正方法 |
+| Pattern | Cause | Fix |
 |---------|-------|-----|
-| 複数の探索サイクル | 不明確な要件 | 事前に具体的に指定 |
-| 重複するファイル読み取り | IDEコンテキストの不足 | IDEプラグインをインストール |
-| 失敗する試行 | テスト/リンティングなし | 検証ツールを追加 |
-| 冗長な説明 | フォーマット制約なし | 簡潔な出力を要求 |
-| 間違ったアーキテクチャ | コンテキストの不足 | Specモードを使用 |
+| Multiple exploration cycles | Unclear requirements | Be specific upfront |
+| Repeated file reads | Missing IDE context | Install IDE plugin |
+| Failed attempts | No tests/linting | Add validation tools |
+| Verbose explanations | No format constraint | Ask for concise output |
+| Wrong architecture | Missing context | Use Spec Mode |
 
-### フォーマット制約
+### Format Constraints
 
-冗長性を減らすために特定の出力フォーマットを要求します：
+Ask for specific output formats to reduce verbosity:
 
 ```
 "Add the feature. Return only the changed code, no explanations unless something is unclear."
@@ -285,68 +285,68 @@ Turn 1: "Add structured logging to all services in src/services/. Use the patter
 
 ---
 
-## 使用量の監視
+## Monitoring Your Usage
 
-### 現在のセッションコストを確認
+### Check Current Session Cost
 
 ```bash
 droid
 > /cost
 ```
 
-これは現在のセッションのトークン使用量を表示します。
+This shows token usage for the current session.
 
-### 時間経過での追跡
+### Track Over Time
 
-使用パターンを確認します：
+Review your usage patterns:
 
-1. **各セッション後**、`/cost`出力をメモ
-2. **高コストなセッションを特定**：何が高コストにしたか？
-3. **アプローチを改善**：より多くのコンテキスト？異なるモデル？より良いプロンプト？
+1. **After each session**, note the `/cost` output
+2. **Identify expensive sessions**: What made them expensive?
+3. **Refine approach**: More context? Different model? Better prompts?
 
-### 使用量の警告サイン
+### Usage Red Flags
 
-これらのパターンに注意してください：
+Watch for these patterns:
 
-- 🚩 **高い読み取り回数**：Droidが過度に探索している（AGENTS.mdコンテキストを追加）
-- 🚩 **複数のgrep/search呼び出し**：何を探すかが不明確（より具体的に）
-- 🚩 **類似の編集を繰り返し**：失敗する試行（テスト/リンティングを確認）
-- 🚩 **非常に長い会話**：スコープクリープ（より小さなタスクに分割）
-
----
-
-## 簡単な改善チェックリスト
-
-即座にトークンを節約するためにこれらを実装してください：
-
-- [ ] **IDEプラグインをインストール** - コンテキスト収集のツール呼び出しを除去
-- [ ] **AGENTS.mdを作成** - Droidが事前にビルド/テストコマンドを把握
-- [ ] **リンティングを設定** - エラーを即座にキャッチ
-- [ ] **高速テストコマンド** - 同じターンで検証
-- [ ] **Specモードを使用** - 高コストな誤ったスタートを防止
-- [ ] **具体的に指定** - 探索サイクルを削減
-- [ ] **タスクにモデルを合わせる** - 単純な編集にOpusを使わない
+- 🚩 **High read count**: Droid is exploring too much (add AGENTS.md context)
+- 🚩 **Multiple grep/search calls**: Unclear what to look for (be more specific)
+- 🚩 **Repeated similar edits**: Failed attempts (check tests/linting)
+- 🚩 **Very long conversations**: Scope creep (break into smaller tasks)
 
 ---
 
-## トークン予算ガイドライン
+## Quick Wins Checklist
 
-一般的なタスクの大まかなガイドライン：
+Implement these for immediate token savings:
 
-| タスク種別 | 典型的なトークン範囲 | 注記 |
+- [ ] **Install IDE plugin** - Eliminates context-gathering tool calls
+- [ ] **Create AGENTS.md** - Droid knows build/test commands upfront
+- [ ] **Configure linting** - Errors caught immediately
+- [ ] **Fast test command** - Verification in same turn
+- [ ] **Use Spec Mode** - Prevents expensive false starts
+- [ ] **Be specific** - Reduces exploration cycles
+- [ ] **Match model to task** - Don't use Opus for simple edits
+
+---
+
+## Token Budget Guidelines
+
+Rough guidelines for common tasks:
+
+| Task Type | Typical Token Range | Notes |
 |-----------|---------------------|-------|
-| 簡単な編集 | 5k-15k | 単純で具体的な変更 |
-| 機能実装 | 30k-80k | Specモード計画あり |
-| 複雑なデバッグ | 50k-150k | 複数回の試行が必要な場合あり |
-| アーキテクチャ計画 | 20k-50k | 高推論モデル |
-| コードレビュー | 30k-60k | PRサイズに依存 |
-| バルクリファクタリング | 50k-200k | 多くのファイル、効率的なモデルを使用 |
+| Quick edit | 5k-15k | Simple, specific changes |
+| Feature implementation | 30k-80k | With Spec Mode planning |
+| Complex debugging | 50k-150k | May need multiple attempts |
+| Architecture planning | 20k-50k | High-reasoning model |
+| Code review | 30k-60k | Depends on PR size |
+| Bulk refactoring | 50k-200k | Many files, use efficient model |
 
-これらの範囲を大幅に超えている場合は、上記の無駄パターンを確認してください。
+If you're significantly exceeding these ranges, review the waste patterns above.
 
 ---
 
-## まとめ：トークン効率的なワークフロー
+## Summary: The Token-Efficient Workflow
 
 ```
 1. Set up your project
@@ -373,7 +373,7 @@ droid
 
 ---
 
-## 次のステップ
+## Next Steps
 
 <CardGroup cols={2}>
   <Card title="Setup Checklist" href="/guides/power-user/setup-checklist" icon="list-check">

@@ -1,166 +1,166 @@
 ---
-title: "モデルコンテキストプロトコル（MCP）"
+title: 'Model Context Protocol (MCP)'
 description: 'Connect your own tools with Model Context Protocol'
 keywords: ['mcp', 'model context protocol', 'tools', 'droid mcp', 'mcp servers', 'mcp tools', 'integrations', 'connect tools', 'extend droid', 'cli mcp', 'add mcp', 'mcp add']
 ---
 
-Model Context Protocol (MCP) サーバーは、追加のツールとコンテキストを提供することでdroidの機能を拡張します。Droidでは、簡単なブラウジングとセットアップのためのインタラクティブUIと、スクリプトや自動化のためのCLIコマンドの2つの管理方法を提供しています。
+Model Context Protocol (MCP) servers extend droid's capabilities by providing additional tools and context. Droid offers two ways to manage them: an interactive UI for easy browsing and setup, or CLI commands for scripting and automation.
 
-## クイックスタート: レジストリから追加
+## Quick Start: Add from Registry
 
-最も簡単に始める方法は、組み込みレジストリを使用することです。droidで`/mcp`と入力し、**「レジストリから追加」**を選択して40以上の事前設定済みサーバーを参照できます：
+The easiest way to get started is using the built-in registry. Type `/mcp` in droid and select **"Add from Registry"** to browse 40+ pre-configured servers:
 
-| サーバー | 説明 |
+| Server | Description |
 | :----- | :---------- |
-| figma | デザインの探索と実装 |
-| linear | 課題追跡とプロジェクト管理 |
-| sentry | エラー追跡とパフォーマンス監視 |
-| notion | ノート、ドキュメント、プロジェクト管理 |
-| supabase | Supabaseプロジェクトの作成と管理 |
-| stripe | 決済処理API |
-| vercel | プロジェクトとデプロイメントの管理 |
-| playwright | エンドツーエンドブラウザーテスト |
-| hubspot | CRMデータ管理 |
-| mongodb | データベース管理 |
-| ... | その他多数 |
+| figma | Design exploration and implementation |
+| linear | Issue tracking and project management |
+| sentry | Error tracking and performance monitoring |
+| notion | Notes, docs, and project management |
+| supabase | Create and manage Supabase projects |
+| stripe | Payment processing APIs |
+| vercel | Manage projects and deployments |
+| playwright | End-to-end browser testing |
+| hubspot | CRM data management |
+| mongodb | Database management |
+| ... | and many more |
 
-リストからサーバーを選択し、必要に応じて認証を行う（ほとんどのHTTPサーバーはOAuthをサポート—ブラウザーのプロンプトに従ってください）と、サーバーがすぐに使用可能になります。
+Select a server from the list, authenticate if required (most HTTP servers support OAuth—just follow the browser prompt), and the server is ready to use.
 
 <Tip>
   The registry is the fastest way to get started. For custom servers or automation, use the CLI commands below.
 </Tip>
 
-## インタラクティブマネージャー（`/mcp`）
+## Interactive Manager (`/mcp`)
 
-droid内で`/mcp`と入力すると、インタラクティブMCPマネージャーが開きます。ここから以下のことができます：
+Type `/mcp` within droid to open the interactive MCP manager. From here you can:
 
-- **サーバーの参照** - 設定済みのすべてのサーバーとその接続状況を確認
-- **ツールの表示** - 接続された各サーバーが提供するツールを検査
-- **有効化/無効化** - サーバーを削除せずに一時的に無効化
-- **認証** - ブラウザー経由でOAuth対応サーバーに接続
-- **認証のクリア** - サーバーの保存された認証情報を削除
-- **レジストリから追加** - 人気のあるMCPサーバーをワンクリックセットアップ
-- **サーバーの削除** - ユーザー設定のサーバーを削除
+- **Browse servers** - See all configured servers and their connection status
+- **View tools** - Inspect what tools each connected server provides
+- **Enable/disable** - Temporarily disable servers without removing them
+- **Authenticate** - Connect to OAuth-enabled servers via browser
+- **Clear auth** - Remove stored credentials for a server
+- **Add from registry** - One-click setup for popular MCP servers
+- **Remove servers** - Delete user-configured servers
 
-## CLIでサーバーを追加
+## Adding Servers via CLI
 
-スクリプトや自動化には、`droid mcp add`を使用してください。Droidは2種類のサーバーをサポートしています：**http**（リモートエンドポイント）と**stdio**（ローカルプロセス）。
+For scripting and automation, use `droid mcp add`. Droid supports two types of servers: **http** (remote endpoints) and **stdio** (local processes).
 
-### HTTPサーバーの追加
+### Adding HTTP Servers
 
-HTTPサーバーはリモートMCPエンドポイントで、クラウドサービスやAPIに接続する推奨方法です。
+HTTP servers are remote MCP endpoints - the recommended way to connect to cloud services and APIs.
 
-**構文：**
+**Syntax:**
 
 ```bash
 droid mcp add <name> <url> --type http [--header "KEY: VALUE"...]
 ```
 
-**引数：**
+**Arguments:**
 
-- `name` - 一意のサーバー識別子
-- `url` - MCPサーバーのHTTP/HTTPS URL
-- `--type http` - HTTPトランスポートを指定するための必須フラグ
-- `--header "KEY: VALUE"` - 認証用HTTPヘッダー（複数回使用可能）
+- `name` - Unique server identifier
+- `url` - HTTP/HTTPS URL of the MCP server
+- `--type http` - Required flag to specify HTTP transport
+- `--header "KEY: VALUE"` - HTTP headers for authentication (can be used multiple times)
 
-### 人気のHTTP MCPサーバー
+### Popular HTTP MCP Servers
 
-#### 開発とテスト
+#### Development & Testing
 
-**Sentry** - エラーの監視、本番環境の問題のデバッグ
+**Sentry** - Monitor errors, debug production issues
 
 ```bash
 droid mcp add sentry https://mcp.sentry.dev/mcp --type http
 ```
 
-**Hugging Face** - Hugging Face HubとGradio AIアプリケーションにアクセス
+**Hugging Face** - Access Hugging Face Hub and Gradio AI applications
 
 ```bash
 droid mcp add hugging-face https://huggingface.co/mcp --type http
 ```
 
-**Socket** - 依存関係のセキュリティ分析
+**Socket** - Security analysis for dependencies
 
 ```bash
 droid mcp add socket https://mcp.socket.dev/ --type http
 ```
 
-#### プロジェクト管理とドキュメント
+#### Project Management & Documentation
 
-**Notion** - ドキュメントの読み取り、ページの更新、タスク管理
+**Notion** - Read docs, update pages, manage tasks
 
 ```bash
 droid mcp add notion https://mcp.notion.com/mcp --type http
 ```
 
-**Linear** - 課題追跡とプロジェクト管理
+**Linear** - Issue tracking and project management
 
 ```bash
 droid mcp add linear https://mcp.linear.app/mcp --type http
 ```
 
-**Intercom** - 顧客の会話とチケットへのアクセス
+**Intercom** - Access customer conversations and tickets
 
 ```bash
 droid mcp add intercom https://mcp.intercom.com/mcp --type http
 ```
 
-**Monday** - monday.comボードとアイテムの管理
+**Monday** - Manage monday.com boards and items
 
 ```bash
 droid mcp add monday https://mcp.monday.com/mcp --type http
 ```
 
-#### 決済と商取引
+#### Payments & Commerce
 
-**Stripe** - 決済処理とサブスクリプション
+**Stripe** - Payment processing and subscriptions
 
 ```bash
 droid mcp add stripe https://mcp.stripe.com --type http
 ```
 
-**PayPal** - PayPal商取引と決済処理
+**PayPal** - PayPal commerce and payment processing
 
 ```bash
 droid mcp add paypal https://mcp.paypal.com/mcp --type http
 ```
 
-#### デザインとメディア
+#### Design & Media
 
-**Figma** - Figmaコンテキストでコードを生成
+**Figma** - Generate code with Figma context
 
 ```bash
 droid mcp add figma https://mcp.figma.com/mcp --type http
 ```
 
-**Canva** - Canvaデザインの閲覧、要約、生成
+**Canva** - Browse, summarize, and generate Canva designs
 
 ```bash
 droid mcp add canva https://mcp.canva.com/mcp --type http
 ```
 
-**TwelveLabs** - 動画分析、検索、AI駆動のインサイト
+**TwelveLabs** - Video analysis, search, and AI-powered insights
 
 ```bash
 droid mcp add twelvelabs-mcp https://mcp.twelvelabs.io --type http \
   --header "x-api-key: YOUR_TWELVELABS_API_KEY"
 ```
 
-#### インフラストラクチャとDevOps
+#### Infrastructure & DevOps
 
-**Netlify** - ウェブサイトの作成、デプロイ、管理
+**Netlify** - Create, deploy, and manage websites
 
 ```bash
 droid mcp add netlify https://netlify-mcp.netlify.app/mcp --type http
 ```
 
-**Vercel** - プロジェクト、デプロイメント、ログの管理
+**Vercel** - Manage projects, deployments, and logs
 
 ```bash
 droid mcp add vercel https://mcp.vercel.com/ --type http
 ```
 
-**Stytch** - 認証サービスの設定
+**Stytch** - Configure authentication services
 
 ```bash
 droid mcp add stytch http://mcp.stytch.dev/mcp --type http
@@ -171,32 +171,32 @@ droid mcp add stytch http://mcp.stytch.dev/mcp --type http
   interactive `/mcp` UI to complete the authentication flow.
 </Tip>
 
-### Stdioサーバーの追加
+### Adding Stdio Servers
 
-Stdioサーバーはマシン上でローカルプロセスとして実行され、直接システムアクセスが必要なツールに最適です。
+Stdio servers run as local processes on your machine - ideal for tools that need direct system access.
 
-**構文：**
+**Syntax:**
 
 ```bash
 droid mcp add <name> "<command>" [--env KEY=VALUE...]
 ```
 
-**引数：**
+**Arguments:**
 
-- `name` - 一意のサーバー識別子
-- `command` - サーバーを開始するためのコマンド（スペースが含まれる場合は引用符で囲む）
-- `--env KEY=VALUE` - 環境変数（複数回使用可能）
+- `name` - Unique server identifier
+- `command` - Command to start the server (quote if it contains spaces)
+- `--env KEY=VALUE` - Environment variables (can be used multiple times)
 
-### 人気のStdio MCPサーバー
+### Popular Stdio MCP Servers
 
-**Airtable** - レコードの読み取り/書き込み、ベースとテーブルの管理
+**Airtable** - Read/write records, manage bases and tables
 
 ```bash
 droid mcp add airtable "npx -y airtable-mcp-server" \
   --env AIRTABLE_API_KEY=your_key
 ```
 
-**ClickUp** - タスク管理とプロジェクト追跡
+**ClickUp** - Task management and project tracking
 
 ```bash
 droid mcp add clickup "npx -y @hauptsache.net/clickup-mcp" \
@@ -204,79 +204,79 @@ droid mcp add clickup "npx -y @hauptsache.net/clickup-mcp" \
   --env CLICKUP_TEAM_ID=your_team_id
 ```
 
-**HubSpot** - CRMデータのアクセスと管理
+**HubSpot** - Access and manage CRM data
 
 ```bash
 droid mcp add hubspot "npx -y @hubspot/mcp-server" \
   --env HUBSPOT_ACCESS_TOKEN=your_token
 ```
 
-## サーバーの削除
+## Removing Servers
 
-設定からサーバーを削除：
+Remove a server from your configuration:
 
 ```bash
 droid mcp remove <name>
 ```
 
-**例：**
+**Example:**
 
 ```bash
 droid mcp remove notion
 ```
 
-## サーバーの管理
+## Managing Servers
 
-droid内で`/mcp`と入力すると、MCPサーバーを管理するためのインタラクティブUIが開きます。
-- 設定済みサーバーをステータス付きですべて表示
-- 各サーバーが提供するすべてのツールを表示
-- OAuth認証が必要なリモートサーバーの認証
-- サーバーの追加/削除および有効化/無効化
+Type `/mcp` within droid to open an interactive UI for managing MCP servers.
+- See all configured servers with status
+- View all tools provided by each server
+- Authenticate remote servers that require OAuth authentication
+- Add/remove and enable/disable servers
 
-## 設定
+## Configuration
 
-MCPサーバーの設定は2つのレベルで保存できます：
+MCP server configurations can be stored at two levels:
 
-| レベル | 場所 | 目的 |
+| Level | Location | Purpose |
 | :---- | :------- | :------ |
-| **ユーザー** | `~/.factory/mcp.json` | 個人のサーバー、すべてのプロジェクトで利用可能 |
-| **プロジェクト** | `.factory/mcp.json` | チーム共有サーバー、リポジトリにコミット |
+| **User** | `~/.factory/mcp.json` | Your personal servers, available in all projects |
+| **Project** | `.factory/mcp.json` | Shared team servers, committed to the repo |
 
-### レイヤー化の仕組み
+### How Layering Works
 
-ユーザー設定がプロジェクト設定よりも優先されます。両方のレベルで同じサーバーが定義されている場合、ユーザーレベルの設定が優先されます。
+User config takes priority over project config. When both levels define the same server, the user-level settings win.
 
-**重要な動作：**
-- プロジェクト定義のサーバーを**有効化/無効化**すると、新しい状態でコピーがユーザー設定に保存されます。元のプロジェクト設定は変更されないため、チームメンバーには影響しません。
-- **プロジェクトサーバーはCLIや`/mcp`UI経由では削除できません**。削除するには、`.factory/mcp.json`を直接編集してください。
-- `droid mcp add`やレジストリ経由で追加したサーバーは、常に**ユーザー設定**に保存されます。
+**Key behaviors:**
+- When you **enable/disable** a project-defined server, a copy is saved to your user config with the new state. The original project config remains unchanged, so your teammates aren't affected.
+- **Project servers cannot be removed** via CLI or the `/mcp` UI. To remove them, edit `.factory/mcp.json` directly.
+- Servers you add via `droid mcp add` or the registry always go to your **user config**.
 
-### OAuthトークン
+### OAuth Tokens
 
-OAuthトークンはシステムキーリング（またはフォールバックファイル）にグローバルに保存され、**プロジェクトごとではありません**。あるプロジェクトでサーバーに認証すると、そのサーバーが設定されているすべての場所で認証されます。
+OAuth tokens are stored globally in your system keyring (or fallback file), **not per-project**. If you authenticate with a server in one project, you're authenticated everywhere that server is configured.
 
-サーバーの認証をクリアするには、`/mcp`インタラクティブマネージャーを使用し、「認証のクリア」を選択してください。
+To clear authentication for a server, use the `/mcp` interactive manager and select "Clear Auth".
 
-### 設定スキーマ
+### Configuration Schema
 
-各サーバーエントリには以下が含まれます：
+Each server entry includes:
 
-| フィールド | 型 | 説明 |
+| Field | Type | Description |
 | :---- | :--- | :---------- |
-| `type` | `"stdio" \| "http"` | サーバータイプ |
-| `disabled` | `boolean` | サーバーを一時的に無効化（デフォルト：`false`） |
-| `disabledTools` | `string[]` | このMCPサーバーで無効化するツール名のリスト |
+| `type` | `"stdio" \| "http"` | Server type |
+| `disabled` | `boolean` | Temporarily disable the server (default: `false`) |
+| `disabledTools` | `string[]` | List of tool names to disable for this MCP server |
 
-**stdio**サーバーの場合：
-- **command**: 実行する実行可能ファイル
-- **args**: コマンドライン引数（配列）
-- **env**: 環境変数（オブジェクト）
+For **stdio** servers:
+- **command**: Executable to run
+- **args**: Command-line arguments (array)
+- **env**: Environment variables (object)
 
-**http**サーバーの場合：
-- **url**: HTTP/HTTPSエンドポイントURL
-- **headers**: 認証用HTTPヘッダー（オブジェクト）
+For **http** servers:
+- **url**: HTTP/HTTPS endpoint URL
+- **headers**: HTTP headers for authentication (object)
 
-**`mcp.json`の例：**
+**Example `mcp.json`:**
 
 ```json
 {
@@ -296,4 +296,5 @@ OAuthトークンはシステムキーリング（またはフォールバック
 }
 ```
 
-Droidは設定ファイルの変更時に自動的にリロードされるため、サーバーを追加した後すぐに利用可能になります。
+Droid automatically reloads when the configuration file changes, so servers are immediately available after adding them.
+

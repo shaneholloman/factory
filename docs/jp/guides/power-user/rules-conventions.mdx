@@ -1,10 +1,10 @@
 ---
-title: "ルールと規約"
+title: Rules and Conventions
 description: Organize coding standards and team conventions so Droid follows them consistently across all work.
 keywords: ['rules', 'conventions', 'standards', 'coding style', 'guidelines', 'team', 'consistency']
 ---
 
-ルールは、Droidが毎回従う成文化された標準です。（決定と文脈を捉える）メモリーとは異なり、ルールはコードがどのように書かれるべきかを定義します。このガイドでは、個人やチームにおいて効果的にルールを整理する方法を説明します。
+Rules are codified standards that Droid follows every time. Unlike memories (which capture decisions and context), rules define how code should be written. This guide shows you how to organize rules effectively for individuals and teams.
 
 <Info>
   **Works with Factory App:** These conventions work identically in both CLI and [Factory App](/web/getting-started/overview)—Droid reads the same `.factory/rules/` files regardless of interface.
@@ -12,24 +12,24 @@ keywords: ['rules', 'conventions', 'standards', 'coding style', 'guidelines', 't
 
 ---
 
-## ルールと他の設定の比較
+## Rules vs Other Configuration
 
-| タイプ | 目的 | 例 |
+| Type | Purpose | Example |
 |------|---------|---------|
-| **ルール** | コードがどのように書かれるべきか | "ネストした条件文の代わりに早期リターンを使用する" |
-| **Memory** | 何が決定され、なぜそうしたか | "Reduxが冗長すぎたため、Zustandを選んだ" |
-| **AGENTS.md** | ビルド/テスト/実行の方法 | "作業完了前に `npm test` を実行する" |
-| **Skills** | 特定のタスクの実行方法 | "新しいAPIエンドポイントを実装するステップ" |
+| **Rules** | How code should be written | "Use early returns instead of nested conditionals" |
+| **Memory** | What was decided and why | "We chose Zustand because Redux was too verbose" |
+| **AGENTS.md** | How to build/test/run | "Run `npm test` before completing work" |
+| **Skills** | How to do specific tasks | "Steps to implement a new API endpoint" |
 
-ルールは**規範的**です—DroidにすべきことをL告します。一貫して適用されるべき標準に使用してください。
+Rules are **prescriptive**—they tell Droid what to do. Use them for standards that should apply consistently.
 
 ---
 
-## ルールディレクトリの設定
+## Setting Up a Rules Directory
 
-### 基本構造
+### Basic Structure
 
-プロジェクトに `.factory/rules/` ディレクトリを作成します：
+Create a `.factory/rules/` directory in your project:
 
 ```
 .factory/
@@ -41,7 +41,7 @@ keywords: ['rules', 'conventions', 'standards', 'coding style', 'guidelines', 't
     └── security.md        # Security requirements
 ```
 
-すべてのプロジェクトに適用される個人ルールの場合：
+For personal rules that apply across all projects:
 
 ```
 ~/.factory/
@@ -50,9 +50,9 @@ keywords: ['rules', 'conventions', 'standards', 'coding style', 'guidelines', 't
     └── tools.md           # Tool preferences
 ```
 
-### AGENTS.mdでルールを参照する
+### Referencing Rules in AGENTS.md
 
-`AGENTS.md` にセクションを追加します：
+Add a section to your `AGENTS.md`:
 
 ```markdown
 ## Coding Standards
@@ -69,17 +69,17 @@ When working on a file, check the relevant rules first.
 
 ---
 
-## 効果的なルールの記述
+## Writing Effective Rules
 
-### ルール構造
+### Rule Structure
 
-各ルールは以下であるべきです：
-- **具体的**: 解釈の余地なく従えるほど明確
-- **実行可能**: 避けるべきことではなく、すべきことを指示
-- **スコープ化**: いつ適用されるかを明記
-- **正当化** (任意): 複雑なルールに対する理由の説明
+Each rule should be:
+- **Specific**: Clear enough to follow without interpretation
+- **Actionable**: Tells what to do, not just what to avoid
+- **Scoped**: States when it applies
+- **Justified** (optional): Explains why for complex rules
 
-### テンプレート
+### Template
 
 ```markdown
 # [Category] Rules
@@ -93,11 +93,11 @@ When working on a file, check the relevant rules first.
 
 ---
 
-## ルールファイルの例
+## Example Rules Files
 
-### TypeScriptルール
+### TypeScript Rules
 
-`.factory/rules/typescript.md` を作成します：
+Create `.factory/rules/typescript.md`:
 
 ```markdown
 # TypeScript Rules
@@ -109,7 +109,7 @@ When working on a file, check the relevant rules first.
 **Rule**: Use `interface` for object types, `type` for unions, intersections, and primitives.
 
 ```typescript
-// ✅ 正しい
+// ✅ Correct
 interface User {
   id: string;
   name: string;
@@ -118,7 +118,7 @@ interface User {
 type Status = 'active' | 'inactive';
 type UserWithStatus = User & { status: Status };
 
-// ❌ 避ける
+// ❌ Avoid
 type User = {
   id: string;
   name: string;
@@ -130,7 +130,7 @@ type User = {
 **Rule**: Never use `any`. Use `unknown` with type guards, or define proper types.
 
 ```typescript
-// ✅ 正しい
+// ✅ Correct
 function processData(data: unknown): string {
   if (typeof data === 'string') {
     return data.toUpperCase();
@@ -138,7 +138,7 @@ function processData(data: unknown): string {
   throw new Error('Expected string');
 }
 
-// ❌ 避ける
+// ❌ Avoid
 function processData(data: any): string {
   return data.toUpperCase();
 }
@@ -151,14 +151,14 @@ function processData(data: any): string {
 **Rule**: Return early for edge cases instead of nesting.
 
 ```typescript
-// ✅ 正しい
+// ✅ Correct
 function processUser(user: User | null): string {
   if (!user) return 'No user';
   if (!user.active) return 'User inactive';
   return `Processing ${user.name}`;
 }
 
-// ❌ 避ける
+// ❌ Avoid
 function processUser(user: User | null): string {
   if (user) {
     if (user.active) {
@@ -177,18 +177,18 @@ function processUser(user: User | null): string {
 **Rule**: Use named exports for better refactoring and import clarity.
 
 ```typescript
-// ✅ 正しい
+// ✅ Correct
 export function createUser() {}
 export const USER_ROLES = ['admin', 'user'] as const;
 
-// ❌ 避ける
+// ❌ Avoid
 export default function createUser() {}
 ```
 ```
 
-### Reactルール
+### React Rules
 
-`.factory/rules/react.md` を作成します：
+Create `.factory/rules/react.md`:
 
 ```markdown
 # React Rules
@@ -204,7 +204,7 @@ export default function createUser() {}
 **Rule**: Name props interface as `{ComponentName}Props`.
 
 ```tsx
-// ✅ 正しい
+// ✅ Correct
 interface UserCardProps {
   user: User;
   onSelect: (user: User) => void;
@@ -220,17 +220,17 @@ export function UserCard({ user, onSelect }: UserCardProps) {
 **Rule**: Order sections as: imports, types, component, exports.
 
 ```tsx
-// 1. インポート（React、外部、内部、型）
+// 1. Imports (React, external, internal, types)
 import { useState } from 'react';
 import { Button } from '@/components/ui';
 import type { User } from '@/types';
 
-// 2. 型
+// 2. Types
 interface UserListProps {
   users: User[];
 }
 
-// 3. コンポーネント
+// 3. Component
 export function UserList({ users }: UserListProps) {
   const [selected, setSelected] = useState<string | null>(null);
   
@@ -537,9 +537,9 @@ Add ownership to track who maintains each rule set:
 Currently, Droid doesn't support conditional rule application based on file patterns (e.g., "apply these rules only to `*.tsx` files"). This is on the roadmap.
 </Warning>
 
-**回避策：**
+**Workarounds:**
 
-1. **ファイルタイプごとに整理**: 別々のルールファイルを作成し、コンテキストに応じて参照する
+1. **Organize by file type**: Create separate rules files and reference them contextually
 
 ```markdown
 # In AGENTS.md
@@ -547,41 +547,41 @@ When working on React components (*.tsx), follow `.factory/rules/react.md`
 When working on API routes, follow `.factory/rules/api.md`
 ```
 
-2. **ルールで明確なスコープを使用**: 適用可能性を明確に述べる
+2. **Use clear scoping in rules**: State applicability clearly
 
 ```markdown
 ## This rule applies to: React component files (*.tsx)
 ```
 
-3. **複雑なワークフローにはskillsを使用**: Skillsはファイルタイプ固有の指示をエンコードできる
+3. **Use skills for complex workflows**: Skills can encode file-type-specific instructions
 
 ---
 
-## ルールの保守
+## Rules Maintenance
 
-### 新しいルールの追加
+### Adding New Rules
 
-Droidを繰り返し修正している場合：
+When you find yourself correcting Droid repeatedly:
 
-1. パターンを特定する
-2. 例を含む明確なルールを記述する
-3. 適切なルールファイルに追加する
-4. 必要に応じてAGENTS.mdを更新する
-5. 類似の作業をDroidに依頼してテストする
+1. Identify the pattern
+2. Write a clear rule with examples
+3. Add to appropriate rules file
+4. Update AGENTS.md if needed
+5. Test by asking Droid to do similar work
 
-### ルールのレビュー
+### Reviewing Rules
 
-四半期レビューチェックリスト：
+Quarterly review checklist:
 
-- [ ] リンティングで強制されるようになったルールを削除
-- [ ] 変更されたルールを更新
-- [ ] 新しいパターンのルールを追加
-- [ ] 例がまだ正確かチェック
-- [ ] AGENTS.mdの参照が最新かを確認
+- [ ] Remove rules that are now enforced by linting
+- [ ] Update rules that have changed
+- [ ] Add rules for new patterns
+- [ ] Check that examples are still accurate
+- [ ] Verify AGENTS.md references are current
 
-### ルールの廃止
+### Deprecating Rules
 
-ルールが時代遅れになった場合：
+When a rule becomes outdated:
 
 ```markdown
 ## ~~Use PropTypes for type checking~~ (DEPRECATED)
@@ -592,13 +592,13 @@ Droidを繰り返し修正している場合：
 
 ---
 
-## ルールの自動実行
+## Enforcing Rules Automatically
 
-Droidは `.factory/rules/` ファイルのルールに従いますが、[hooks](/cli/configuration/hooks-guide) で自動実行を追加できます。
+While Droid follows rules from your `.factory/rules/` files, you can add automated enforcement with [hooks](/cli/configuration/hooks-guide).
 
-### 編集後にリンターを実行
+### Run Linters After Edits
 
-ファイル編集後にリンターを自動実行するPostToolUseフックを追加します：
+Add a PostToolUse hook to run your linter after every file edit:
 
 ```json
 {
@@ -618,9 +618,9 @@ Droidは `.factory/rules/` ファイルのルールに従いますが、[hooks](
 }
 ```
 
-### コードスタイルの検証
+### Validate Code Style
 
-Prettierやフォーマッターを自動実行します：
+Run Prettier or your formatter automatically:
 
 ```json
 {
@@ -646,16 +646,16 @@ Prettierやフォーマッターを自動実行します：
 
 ---
 
-## クイックリファレンス
+## Quick Reference
 
-### ファイルの場所
+### File Locations
 
-| スコープ | 場所 | 用途 |
+| Scope | Location | Use For |
 |-------|----------|---------|
-| 個人 | `~/.factory/rules/` | あなたのスタイル設定 |
-| プロジェクト | `.factory/rules/` | チーム標準 |
+| Personal | `~/.factory/rules/` | Your style preferences |
+| Project | `.factory/rules/` | Team standards |
 
-### ルール形式
+### Rule Format
 
 ```markdown
 ## [Rule Name]
@@ -665,19 +665,19 @@ Prettierやフォーマッターを自動実行します：
 **Rationale**: [why - optional]
 ```
 
-### 良いルールの条件
+### Good Rules Are
 
-- ✅ 具体的で曖昧さがない
-- ✅ コード例を含む
-- ✅ いつ適用されるかを明記
-- ✅ 実行可能（「Xを検討する」ではなく「Xを行う」）
-- ❌ 曖昧ではない（「クリーンなコードを書く」）
-- ❌ リンタールールと重複していない
-- ❌ 他のルールと矛盾していない
+- ✅ Specific and unambiguous
+- ✅ Include code examples
+- ✅ State when they apply
+- ✅ Actionable (do X, not "consider X")
+- ❌ Not vague ("write clean code")
+- ❌ Not duplicating linter rules
+- ❌ Not contradicting other rules
 
 ---
 
-## 次のステップ
+## Next Steps
 
 <CardGroup cols={2}>
   <Card title="Setup Checklist" href="/guides/power-user/setup-checklist" icon="list-check">
